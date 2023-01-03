@@ -1,25 +1,17 @@
 
-class Rectangle {
-    constructor(width,height){
-        this.width = width;
-        this.height = height;
-    }
+// const reg =  /[\W_]/;
+
+// console.log(reg.test('Aa1asdAa2'));
+
+
+console.log(a);
+
+const User {
     
-    getPerimeter () {
-        return 2 * (this.width + this.height)
-    }
-    
-    getArea() {
-        return this.width * this.height;
-    }
-
 }
+const users = [
+    {   datavalues: 1    },
+    {     datavaluse: 2   }
+]
 
-class Square extends Rectangle{
-    constructor(length){
-        super(length,length)
-    }
-}
-
-const square1 = new Rectangle(10,20);
-console.log(square1.getArea());
+console.log(users);

@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.posts.belongsTo(models.posts, { foreignkey:'userId',targetKey:'userId' });
     }
   }
 
@@ -17,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey:true,
       type: DataTypes.INTEGER,  
     },
+    userId: DataTypes.INTEGER,
     title: DataTypes.STRING,
     
     content: DataTypes.STRING,

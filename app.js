@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3001;
 const { sequelize } = require('./models/index.js');
-
+const cookieParser = require('cookie-parser');
 const indexRouter = require('./routes/index.js');
 
 sequelize.sync({ force: false})
@@ -15,7 +15,7 @@ sequelize.sync({ force: false})
 
 
 app.use(express.json());
-
+app.use(cookieParser());
 
 app.get('/',(req,res)=>{
     res.send('메인페이지');

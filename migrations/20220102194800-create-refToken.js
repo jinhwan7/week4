@@ -1,38 +1,30 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('posts', {
-
-      postId: {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('refTokens', {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId:{
-        type: Sequelize.INTEGER
-      },
-      title:{
+      refreshToken: {
         type: Sequelize.STRING
       },
-
-      content: {
+      nickname: {
         type: Sequelize.STRING
       },
-
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('posts');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('refTokens');
   }
 };
