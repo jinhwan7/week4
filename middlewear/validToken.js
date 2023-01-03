@@ -1,14 +1,14 @@
 // middlewares/auth-middleware.js
 const SECRET_KEY = '이큐브랩 수석개발자';
 const express = require('express');
-const router = express.Router();
+//const router = express.Router();
 const jwt = require("jsonwebtoken");
-const { User } = require("../models/index.js");
+//const { User } = require("../models/index.js");
 const { refToken } = require("../models/index.js");
 
 module.exports = async (req, res, next) => {
     const { Authorization } = req.cookies
-    //console.log(Authorization)
+    
 
     const [authType, authToken] = (Authorization || "").split(" ");
 

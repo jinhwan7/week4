@@ -2,27 +2,31 @@ const express = require('express');
 const { TokenExpiredError } = require('jsonwebtoken');
 const router = express.Router();
 const validToken = require('../middlewear/validToken.js')
-const { posts } = require('../models/index.js');
+const { Posts } = require('../models/index.js');
 const { User } = require('../models/index.js');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    const postGroup  = JSON.stringify(await Posts.findAll({}));
+    console.log(postGroup);
+
     res.send('잘되어요');
 });
 
-token()
 router.post('/' ,validToken, async (req, res) => {
     const { title, content } = req.body;
-    console.log(res.cookie);
+   
     const nickname = res.locals.nickname;
-    console.log('이거나오나요',nickname);
-    const userId = await User.findOne({
+    
+    const findthing = await User.findOne({
         attributes: ['userId'],
         where: {
             nickname: nickname,
         },
     });
-
-    await posts.create({
+    const { userId }  =  JSON.parse(JSON.stringify(findthing));
+   
+    await Posts.create({
+        
         userId: userId,
         title: title,
         content:content
