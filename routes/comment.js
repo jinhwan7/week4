@@ -53,7 +53,7 @@ router.get('/:postId', async (req, res) => {
     res.send({ data: result });
 });
 
-//게시글 수정
+//댓글 수정
 router.put('/:commentId', validToken, async (req, res) => {
     const { commentId } = req.params;
     const { comment } = req.body;
@@ -78,11 +78,39 @@ router.put('/:commentId', validToken, async (req, res) => {
     })
     if (!iscommentUpdate[0]) {
         res.status(400).send({ message: "본인인 쓴 댓글이 아닙니다" });
-    }else{
+    } else {
         res.status(200).send({ message: "수정되었습니다" });
     }
-    
+
 
 });
+
+
+//댓글 삭제
+router.delete('/:commentId', validToken, async (req, res) => {
+    const { commentId } = req.params;
+    const userId = res.locals.userId;
+
+    const commentGroup = await Comment.findAll({
+        where: { commentId: commentId },
+    });
+
+    if (!commentGroup.length) {
+        return res.status(400).send({ message: "댓글이 없습니다" })
+    }
+
+
+    const result = await Comment.destroy({
+        where: {
+            [Op.and]: [{ commentId: commentId }, { userId: userId }]
+        }
+    });
+    if (result === 0) {
+        return res.status(400).send({ errMessage: "본인이쓴 댓글이 아닙니다" })
+    }
+
+    res.send({ message: "댓글을 삭제했습니다" });
+});
+
 
 module.exports = router;
