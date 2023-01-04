@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch \"./src/**/*.js\" --exec \"npm start\""
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,7 @@
     "sequelize": "^6.28.0"
   },
   "devDependencies": {
+    "nodemon": "^2.0.20",
     "sequelize-cli": "^6.5.2"
   }
 }

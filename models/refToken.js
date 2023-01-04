@@ -1,24 +1,23 @@
 'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class refToken extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
+const Sequelize = require('sequelize');
+
+class refToken extends Sequelize.Model {
+  static initiate(sequelize) {
+    
+    refToken.init({
+      refreshToken: { type: Sequelize.STRING },
+      nickname: { type: Sequelize.STRING }
+    }, {
+      sequelize,
+      modelName: 'refToken',
+      tableName: 'refTokens',
+    });
   }
 
-  refToken.init({
-    refreshToken: DataTypes.STRING,  
-    nickname: DataTypes.STRING,    
-  }, {
-    sequelize,
-    modelName: 'refToken',
-  });
+  static associate(models) {
+    // define association here
+  }
 
-  return refToken;
-};
+}
+
+module.exports = refToken;
