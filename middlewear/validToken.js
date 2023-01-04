@@ -23,31 +23,32 @@ module.exports = async (req, res, next) => {
     try {
         jwt.verify(refresh, SECRET_KEY)
         try {
-            const { nickname } = jwt.verify(authToken, SECRET_KEY);
-            res.locals.nickname = nickname;
+            const { userId } = jwt.verify(authToken, SECRET_KEY);
+            res.locals.userId = userId;
             next();
 
         } catch (err) {
 
-            let  nickname  = await refToken.findOne({
-                attributes: ['nickname'],
+            let  userId  = await refToken.findOne({
+                attributes: ['userId'],
                 where: {
                     refreshToken: refresh,
                 },
             });
-            nickname  = nickname.dataValues.nickname
+            userId = userId.dataValues.userId
             const accessToken = jwt.sign(
-                { "nickname": nickname },
+                { "userId": userId },
                 SECRET_KEY,
                 {
                     expiresIn: '10s'
                 });
             res.cookie('Authorization', `Bearer ${accessToken}`);
             console.log('엑세스쿠키재발급')
-            res.locals.nickname = nickname;
+            res.locals.userId = userId;
             next();
         }
-    } catch {
+    } catch(err) {
+        console.log(err);
         res.status(401).send({
             errorMessage: "다시 로그인해주세요.refresh토큰 만료",
         });

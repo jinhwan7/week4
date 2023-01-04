@@ -6,7 +6,7 @@ class refToken extends Sequelize.Model {
     
     refToken.init({
       refreshToken: { type: Sequelize.STRING },
-      nickname: { type: Sequelize.STRING }
+      userId: { type: Sequelize.INTEGER }
     }, {
       sequelize,
       modelName: 'refToken',

@@ -9,15 +9,15 @@ const { User } = require('../models/index.js');
 router.post('/', validToken, async (req, res) => {
     const { title, content } = req.body;
 
-    const nickname = res.locals.nickname;
+    const userId = res.locals.userId;
 
-    const findthing = await User.findOne({
-        attributes: ['userId'],
-        where: {
-            nickname: nickname,
-        },
-    });
-    const { userId } = JSON.parse(JSON.stringify(findthing));
+    // const findthing = await User.findOne({
+    //     attributes: ['nickname'],
+    //     where: {
+    //         nickname: nickname,
+    //     },
+    // });
+    // const { userId } = JSON.parse(JSON.stringify(findthing));
 
     await Posts.create({
 
@@ -25,8 +25,8 @@ router.post('/', validToken, async (req, res) => {
         title: title,
         content: content
     });
-
-
+    
+    
     //console.log(title, content)
     res.status(200).json({ message: "게시글 작성완료" })
 });
@@ -88,7 +88,7 @@ router.get('/:postId', async (req, res) => {
 
 //게시글 수정
 router.put('/:postId', validToken, async (req, res) => {
-    const nickname = res.locals.nickname;
+    const userId = res.locals.userId;
     const { postId } = req.params;
     const { title, content } = req.body;
     const excistPost = await Posts.findAll({
@@ -96,7 +96,7 @@ router.put('/:postId', validToken, async (req, res) => {
         include: [{
             model: User,
             attributes: ['nickname'],
-            where: { nickname: nickname }
+            where: { userId: userId }
         }],
 
     });
@@ -122,14 +122,14 @@ router.put('/:postId', validToken, async (req, res) => {
 //게시글 삭제
 router.delete('/:postId', validToken, async (req, res) => {
     const { postId } = req.params;
-    const nickname = res.locals.nickname;
+    const userId = res.locals.userId;
 
     const existPost = await Posts.findAll({
         where: { postId: postId },
 
         include: [{
             model: User,
-            where: { nickname: nickname }
+            where: { userId: userId }
         }]
     });
     if (!existPost.length) {

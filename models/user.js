@@ -13,7 +13,7 @@ class User extends Sequelize.Model {
         type: Sequelize.INTEGER,
       },
       nickname: { type: Sequelize.STRING, },
-
+                        
       password: { type: Sequelize.STRING }
     }, {
       sequelize,

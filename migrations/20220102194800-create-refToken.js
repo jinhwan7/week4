@@ -11,8 +11,8 @@ module.exports = {
       refreshToken: {
         type: Sequelize.STRING
       },
-      nickname: {
-        type: Sequelize.STRING
+      userId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
