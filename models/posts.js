@@ -29,7 +29,9 @@ class Posts extends Sequelize.Model {
 
   static associate(db) {
     // define association here
-    db.Posts.belongsTo(db.User, { foreignKey: 'userId', sourceKey: 'userId' })
+    db.Posts.belongsTo(db.User, { foreignKey: 'userId', targetKey: 'userId' })
+    
+    db.Posts.hasMany(db.Like, { foreignKey: 'postId', sourceKey: 'postId' })
   }
 };
 

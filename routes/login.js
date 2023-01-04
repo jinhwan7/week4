@@ -3,6 +3,7 @@ const router = express.Router();
 const { User } = require('../models/index.js');
 const { refToken } = require('../models/index.js');
 const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize');
 const cookieParser = require('cookie-parser');
 const SECRET_KEY = '이큐브랩 수석개발자';
 
@@ -14,15 +15,18 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     const { nickname, password } = req.body;
-
+    const passwordstr = String(password);
     const users = await User.findOne({
         attributes: ['nickname', 'password'],
         where: {
-            nickname: nickname,
-            password: password
+            password: passwordstr,
+            nickname: nickname
+            // [Op.and] : [
+            //     { nickname: nickname ,password: password},
+            // ]
         },
     });
-
+    
     if (!users) {
         return res.status(404).json({ message: "아이디나 패스워드가 틀렸습니다" });
     }

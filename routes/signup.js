@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: "동일한 닉네임이 있습니다" })
         }
     } catch {
-        return res.status(400).json({ message: "그런거 안걸립니다 닉네임을 써주세요" })
+        return res.status(400).json({ message: " 닉네임을 써주세요" })
     }
 
     const passwordstr = String(password);
