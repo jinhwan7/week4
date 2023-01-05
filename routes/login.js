@@ -16,21 +16,18 @@ router.get('/', (req, res) => {
 router.post('/', async (req, res) => {
     const { nickname, password } = req.body;
     const passwordstr = String(password);
-    const { userId } = JSON.parse(JSON.stringify(await User.findOne({
+
+    const existUserId = await User.findOne({
         attributes: ['userId'],
         where: {
             password: passwordstr,
             nickname: nickname
-            // [Op.and] : [
-            //     { nickname: nickname ,password: password},
-            // ]
         },
-    })));
-   
-    if (!userId) {
+    });
+    if (!existUserId) {
         return res.status(404).json({ message: "아이디나 패스워드가 틀렸습니다" });
     }
-
+    const { userId } = JSON.parse(JSON.stringify(existUserId));
     const accessToken = jwt.sign(
         { userId: userId },
         SECRET_KEY,
@@ -50,7 +47,7 @@ router.post('/', async (req, res) => {
         refreshToken: refreshToken,
         userId: userId,
     });
-    
+
     res.cookie('Authorization', `Bearer ${accessToken}`);
     res.cookie('refresh', refreshToken);
     return res.send({ "token": accessToken });
