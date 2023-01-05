@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = 3000;
 const { sequelize } = require('./models/index.js');
 const cookieParser = require('cookie-parser');
 const indexRouter = require('./routes/index.js');
